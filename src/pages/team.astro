@@ -1,0 +1,93 @@
+---
+import TeamHeroSection from "../components/TeamHeroSection.astro";
+import TeamGridSection from "../components/TeamGridSection.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>ZADPLAY - Meet Our Team</title>
+    <meta name="title" content="ZADPLAY - Meet Our Team" />
+    <meta name="description" content="Meet the talented team behind ZADPLAY. Our experts specialize in transforming properties into revenue-generating assets through innovative digital advertising solutions and media screen technology." />
+    <meta name="keywords" content="ZADPLAY team, digital advertising experts, outdoor advertising professionals, media screen specialists" />
+    <meta name="author" content="ZADPLAY" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content="ZADPLAY - Meet Our Team" />
+    <meta property="og:description" content="Meet the talented team behind ZADPLAY. Our experts specialize in transforming properties into revenue-generating assets through innovative digital advertising solutions." />
+    <meta property="og:image" content={`${Astro.url.origin}/banner-image.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="ZADPLAY" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta property="twitter:title" content="ZADPLAY - Meet Our Team" />
+    <meta property="twitter:description" content="Meet the talented team behind ZADPLAY. Our experts specialize in transforming properties into revenue-generating assets through innovative digital advertising solutions." />
+    <meta property="twitter:image" content={`${Astro.url.origin}/banner-image.jpg`} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={Astro.url.href} />
+  </head>
+  <body>
+    <TeamHeroSection />
+    <TeamGridSection />
+    <Footer />
+  </body>
+</html>
+
+<style>
+  @font-face {
+    font-family: "Open Sans Condensed";
+    src: url("/fonts/OpenSans-CondBold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "Open Sans Condensed";
+    src: url("/fonts/OpenSans-CondLight.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family:
+      "Open Sans Condensed",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: 700;
+  }
+</style>

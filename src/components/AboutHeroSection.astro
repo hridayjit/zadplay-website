@@ -1,0 +1,41 @@
+---
+// AboutHeroSection component
+import Navbar from './Navbar.astro';
+---
+
+<section class="about-hero-section">
+  <Navbar />
+</section>
+
+
+<style>
+  .about-hero-section {
+    background: #ffd900;
+    padding: 2rem;
+  }
+
+  .about-hero-section .navbar {
+    margin-bottom: 0;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .about-hero-section {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .about-hero-section {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-hero-section {
+      padding: 1rem;
+    }
+  }
+</style>
+

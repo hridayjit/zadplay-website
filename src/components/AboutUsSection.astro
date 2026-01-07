@@ -1,0 +1,325 @@
+---
+// AboutUsSection component
+---
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be ready
+  document.addEventListener('DOMContentLoaded', () => {
+    // Fade-in + slide-up animation to main title
+    gsap.from('.about-main-title', {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      scrollTrigger: {
+        trigger: '.about-us-section',
+        start: 'top 75%',
+      },
+    });
+
+    // Staggered fade-in + slide-up to service items
+    gsap.from('.about-item', {
+      y: 20,
+      opacity: 0,
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: '.about-us-section',
+        start: 'top 75%',
+      },
+    });
+
+    // Staggered scale-in to service images
+    gsap.from('.about-image', {
+      scale: 0,
+      duration: 0.6,
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: '.about-us-section',
+        start: 'top 75%',
+      },
+    });
+  });
+</script>
+
+<section class="about-us-section">
+  <div class="about-container">
+    <div class="about-header">
+      <h2 class="about-main-title">ABOUT US</h2>
+      <div class="about-main-content">
+        <p class="about-description">
+          Clear pricing, real-time reporting, and zero hidden costs. You<br />
+          always know how your space is performing and what you are<br />
+          earning.
+        </p>
+        <div class="about-main-image">
+          <img src="/images/5.jpg" alt="About Us" />
+        </div>
+      </div>
+    </div>
+
+    <div class="about-items-list">
+      <div class="about-item">
+        <div class="about-item-content">
+          <h3 class="about-item-title">DIGITAL OUT-OF-HOME (DOOH)</h3>
+          <p class="about-item-description">
+            Clear pricing, real-time reporting, and zero hidden costs. You<br />
+            always know how your space is performing and what you are<br />
+            earning.
+          </p>
+        </div>
+        <div class="about-image">
+          <img src="/images/7.jpg" alt="Digital Out-of-Home (DOOH)" />
+        </div>
+      </div>
+
+      <div class="about-item">
+        <div class="about-item-content">
+          <h3 class="about-item-title">CONNECTED TV</h3>
+          <p class="about-item-description">
+            Clear pricing, real-time reporting, and zero hidden costs. You<br />
+            always know how your space is performing and what you are<br />
+            earning.
+          </p>
+        </div>
+        <div class="about-image">
+          <img src="/images/10.jpg" alt="Connected TV" />
+        </div>
+      </div>
+
+      <div class="about-item">
+        <div class="about-item-content">
+          <h3 class="about-item-title">FLOOR STANDING DISPLAYS</h3>
+          <p class="about-item-description">
+            Clear pricing, real-time reporting, and zero hidden costs. You<br />
+            always know how your space is performing and what you are<br />
+            earning.
+          </p>
+        </div>
+        <div class="about-image">
+          <img src="/images/5.jpg" alt="Floor Standing Displays" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* About Us Section */
+  .about-us-section {
+    background: #ffd900;
+    padding: 4rem 2rem;
+    color: #000;
+  }
+
+  .about-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .about-header {
+    margin-bottom: 4rem;
+  }
+
+  .about-main-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .about-main-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about-description {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #000;
+  }
+
+  .about-main-image {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .about-main-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .about-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    padding: 2rem 0;
+    border-top: 3px solid #000;
+  }
+
+  .about-item:last-child {
+    border-bottom: 3px solid #000;
+  }
+
+  .about-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .about-item-title {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .about-item-description {
+    font-size: clamp(1rem, 1.8vw, 1.3rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #000;
+  }
+
+  .about-image {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .about-us-section {
+      padding: 3rem 2rem;
+    }
+
+    .about-main-content {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .about-main-image {
+      max-width: 100%;
+      margin: 0 auto;
+    }
+
+    .about-item {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .about-image {
+      order: -1;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .about-us-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .about-header {
+      margin-bottom: 3rem;
+    }
+
+    .about-main-title {
+      font-size: clamp(2rem, 6vw, 3rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-description {
+      font-size: 1.1rem;
+    }
+
+    .about-description br {
+      display: none;
+    }
+
+    .about-items-list {
+      gap: 2rem;
+    }
+
+    .about-item {
+      padding: 2rem 0;
+      border-top: 2px solid #000;
+    }
+
+    .about-item:last-child {
+      border-bottom: 2px solid #000;
+    }
+
+    .about-item-title {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .about-item-description {
+      font-size: 1rem;
+    }
+
+    .about-item-description br {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .about-us-section {
+      padding: 2rem 1rem;
+    }
+
+    .about-main-title {
+      font-size: 2rem;
+    }
+
+    .about-description {
+      font-size: 1rem;
+    }
+
+    .about-items-list {
+      gap: 1.5rem;
+    }
+
+    .about-item {
+      padding: 1.5rem 0;
+    }
+
+    .about-item-title {
+      font-size: 1.5rem;
+    }
+
+    .about-item-description {
+      font-size: 0.95rem;
+    }
+  }
+</style>
+

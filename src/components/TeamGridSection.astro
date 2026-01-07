@@ -1,0 +1,218 @@
+---
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Define TeamMember interface
+interface TeamMember {
+  name: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
+// Create teamMembers data array with 6 sample team members
+const teamMembers: TeamMember[] = [
+  {
+    name: "ALEX JOHNSON",
+    title: "CEO & FOUNDER",
+    description: "Visionary leader with 15+ years in digital advertising and real estate innovation. Passionate about transforming spaces into revenue streams.",
+    image: "/images/4.jpg"
+  },
+  {
+    name: "SARAH MARTINEZ",
+    title: "CHIEF TECHNOLOGY OFFICER",
+    description: "Tech innovator specializing in digital signage platforms and programmatic advertising solutions. Building the future of DOOH.",
+    image: "/images/5.jpg"
+  },
+  {
+    name: "MICHAEL CHEN",
+    title: "HEAD OF PARTNERSHIPS",
+    description: "Expert in forging strategic relationships with property owners and advertisers. Connecting brands with premium locations.",
+    image: "/images/6.jpg"
+  },
+  {
+    name: "EMILY RODRIGUEZ",
+    title: "CREATIVE DIRECTOR",
+    description: "Award-winning designer crafting compelling visual experiences. Ensuring every campaign captures attention and drives results.",
+    image: "/images/7.jpg"
+  },
+  {
+    name: "DAVID THOMPSON",
+    title: "VP OF OPERATIONS",
+    description: "Operations specialist ensuring seamless installation and maintenance of media screens. Keeping the network running 24/7.",
+    image: "/images/8.jpg"
+  },
+  {
+    name: "JESSICA WILLIAMS",
+    title: "HEAD OF SALES",
+    description: "Sales leader helping property owners unlock the value of their spaces. Turning walls into wallets, one partnership at a time.",
+    image: "/images/9.jpg"
+  }
+];
+---
+
+<section class="team-grid-section">
+  <div class="team-grid-container">
+    {teamMembers.map((member) => (
+      <div class="team-card">
+        <div class="team-card-image">
+          <img src={member.image} alt={member.name} />
+        </div>
+        <h3 class="team-card-name">{member.name}</h3>
+        <p class="team-card-title">{member.title}</p>
+        <p class="team-card-description">{member.description}</p>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .team-grid-section {
+    background-color: #fff8d1;
+    padding: 4rem 2rem;
+    min-height: 100vh;
+  }
+
+  .team-grid-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+
+  .team-card {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .team-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  .team-card-image {
+    margin-bottom: 1.5rem;
+  }
+
+  .team-card-image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+
+  .team-card-name {
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    color: #000;
+    margin-bottom: 0.5rem;
+  }
+
+  .team-card-title {
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+
+  .team-card-description {
+    font-family: "Open Sans Condensed", sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* Tablet breakpoint (768px - 1023px) */
+  @media (max-width: 1023px) {
+    .team-grid-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .team-grid-container {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  /* Mobile breakpoint (< 768px) */
+  @media (max-width: 767px) {
+    .team-grid-section {
+      padding: 2rem 1rem;
+    }
+
+    .team-grid-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .team-card {
+      padding: 1.5rem;
+    }
+
+    .team-card-image img {
+      width: 150px;
+      height: 150px;
+    }
+
+    .team-card-name {
+      font-size: 1.3rem;
+    }
+
+    .team-card-title {
+      font-size: 1rem;
+    }
+
+    .team-card-description {
+      font-size: 0.9rem;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Wait for DOM to be ready
+  document.addEventListener("DOMContentLoaded", () => {
+    // Staggered fade-in + slide-up animation for team cards
+    gsap.from(".team-card", {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".team-grid-section",
+        start: "top 75%",
+        toggleActions: "play none none none"
+      }
+    });
+
+    // Scale-in animation for profile images
+    gsap.from(".team-card-image img", {
+      scale: 0.8,
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".team-grid-section",
+        start: "top 75%",
+        toggleActions: "play none none none"
+      }
+    });
+  });
+</script>

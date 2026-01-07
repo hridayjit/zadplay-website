@@ -1,0 +1,530 @@
+---
+// Navbar component - Reusable navigation bar for all pages
+---
+
+<nav class="navbar">
+  <a href="/" class="logo">ZADPLAY</a>
+  <div class="nav-buttons">
+    <a href="/work" class="nav-btn nav-btn-filled">WORK</a>
+    <a href="/about" class="nav-btn">ABOUT</a>
+    <a href="/services" class="nav-btn">SERVICES</a>
+  </div>
+  <button class="menu-btn" aria-label="Toggle menu">
+    <span class="menu-text-wrapper">
+      <span class="menu-text">MENU</span>
+    </span>
+    <span class="menu-icon-wrapper">
+      <span class="menu-icon">+</span>
+    </span>
+  </button>
+</nav>
+
+<div class="mobile-menu">
+  <div class="mobile-menu-content">
+    <nav class="mobile-nav">
+      <a href="/" class="mobile-nav-link">HOME</a>
+      <a href="/work" class="mobile-nav-link">WORK</a>
+      <a href="/about" class="mobile-nav-link">ABOUT</a>
+      <a href="/services" class="mobile-nav-link">SERVICES</a>
+      <a href="/contact" class="mobile-nav-link">CONTACT</a>
+    </nav>
+    <div class="mobile-contact">
+      <div class="contact-item">ANDREW@ZADPLAY.COM</div>
+      <div class="contact-item">2816 CRESTWOOD BLVD, IRONDALE, AL 35210, UNITED STATES</div>
+    </div>
+    <div class="mobile-social">
+      <a href="#" class="social-link">INSTAGRAM</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  import gsap from 'gsap';
+
+  // Ensure animations initialize after DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.querySelector('.menu-btn') as HTMLElement;
+    const mobileMenu = document.querySelector('.mobile-menu') as HTMLElement;
+    const menuTextWrapper = document.querySelector('.menu-text-wrapper') as HTMLElement;
+    const menuText = document.querySelector('.menu-text') as HTMLElement;
+    const menuIconWrapper = document.querySelector('.menu-icon-wrapper') as HTMLElement;
+    const menuIcon = document.querySelector('.menu-icon') as HTMLElement;
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    const mobileContact = document.querySelectorAll('.contact-item');
+    const mobileSocial = document.querySelector('.social-link') as HTMLElement;
+    
+    // Function to animate text change with circular rotation
+    const animateTextChange = (newText: string, newIcon: string, isOpening: boolean) => {
+      if (!menuTextWrapper || !menuIconWrapper || !menuText || !menuIcon || !menuBtn) return;
+      
+      // Ensure text doesn't wrap
+      gsap.set(menuBtn, { whiteSpace: 'nowrap' });
+      
+      // Get current button width
+      const currentWidth = menuBtn.offsetWidth;
+      
+      // Temporarily change text to measure new width
+      const originalText = menuText.textContent;
+      const originalIcon = menuIcon.textContent;
+      
+      menuText.textContent = newText;
+      menuIcon.textContent = newIcon;
+      
+      // Force reflow to get accurate measurement
+      void menuBtn.offsetWidth;
+      
+      const newWidth = menuBtn.offsetWidth;
+      
+      // Reset to original text temporarily
+      menuText.textContent = originalText;
+      menuIcon.textContent = originalIcon;
+      
+      // Set initial width to current width
+      gsap.set(menuBtn, { width: currentWidth });
+      
+      // Create circular rotation animation (like speedometer)
+      const rotation = isOpening ? 360 : -360;
+      
+      // Start width expansion immediately
+      gsap.to(menuBtn, {
+        width: newWidth,
+        duration: 0.3,
+        ease: 'power2.inOut'
+      });
+      
+      // Change text after width has expanded enough (at 0.5 seconds, when width is ~90% expanded)
+      // This ensures button is wide enough before showing new text
+      gsap.delayedCall(0.2, () => {
+        menuText.textContent = newText;
+        menuIcon.textContent = newIcon;
+      });
+      
+      // Animate text wrapper with 3D rotation for circular effect
+      gsap.to(menuTextWrapper, {
+        rotationY: rotation,
+        duration: 0.6,
+        ease: 'power2.inOut',
+        transformOrigin: 'center center',
+        onComplete: () => {
+          // Reset rotation for next animation
+          gsap.set(menuTextWrapper, { rotationY: 0 });
+          // Remove fixed width to allow natural sizing after animation completes
+          gsap.set(menuBtn, { clearProps: 'width' });
+        }
+      });
+      
+      // Animate icon wrapper with 3D rotation
+      gsap.to(menuIconWrapper, {
+        rotationY: rotation,
+        duration: 0.6,
+        ease: 'power2.inOut',
+        transformOrigin: 'center center',
+        onComplete: () => {
+          // Reset rotation for next animation
+          gsap.set(menuIconWrapper, { rotationY: 0 });
+        }
+      });
+    };
+    
+    if (menuBtn && mobileMenu) {
+      const closeMenu = () => {
+        // Animate menu items out first
+        gsap.to([...mobileNavLinks, ...mobileContact, mobileSocial], {
+          opacity: 0,
+          y: 20,
+          duration: 0.2,
+          stagger: 0.05,
+          ease: 'power2.in'
+        });
+        
+        // Then shrink menu back to bottom right
+        gsap.to(mobileMenu, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.4,
+          ease: 'power2.in',
+          delay: 0.1,
+          onComplete: () => {
+            mobileMenu.classList.remove('active');
+            mobileMenu.style.display = 'none';
+            menuBtn.classList.remove('active');
+            // Animate text change back to MENU with circular rotation
+            animateTextChange('MENU', '+', false);
+          }
+        });
+      };
+
+      menuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.contains('active');
+        
+        if (isOpen) {
+          closeMenu();
+        } else {
+          // Open menu - expand from bottom right
+          mobileMenu.style.display = 'flex';
+          mobileMenu.classList.add('active');
+          menuBtn.classList.add('active');
+          
+          // Set initial state - start from small scale at bottom right
+          gsap.set(mobileMenu, {
+            scale: 0.1,
+            opacity: 0,
+            transformOrigin: 'bottom right'
+          });
+          
+          // Animate menu expanding from bottom right
+          gsap.to(mobileMenu, {
+            scale: 1,
+            opacity: 1,
+            duration: 0.5,
+            ease: 'back.out(1.2)'
+          });
+          
+          // Change button text and icon to CLOSE MENU and X after 1 second with circular rotation
+          gsap.delayedCall(0.2, () => {
+            animateTextChange('CLOSE MENU', '×', true);
+          });
+          
+          // Animate menu items in with stagger
+          gsap.fromTo(mobileNavLinks,
+            { 
+              opacity: 0,
+              y: 30
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              stagger: 0.1,
+              delay: 0.2,
+              ease: 'power2.out'
+            }
+          );
+          
+          // Animate contact info
+          gsap.fromTo(mobileContact,
+            {
+              opacity: 0,
+              y: 20
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              stagger: 0.1,
+              delay: 0.5,
+              ease: 'power2.out'
+            }
+          );
+          
+          // Animate social link
+          if (mobileSocial) {
+            gsap.fromTo(mobileSocial,
+              {
+                opacity: 0,
+                y: 20
+              },
+              {
+                opacity: 1,
+                y: 0,
+                duration: 0.4,
+                delay: 0.7,
+                ease: 'power2.out'
+              }
+            );
+          }
+        }
+      });
+
+      // Close menu when clicking on a link
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          closeMenu();
+        });
+      });
+
+      // Close menu when clicking on social link
+      if (mobileSocial) {
+        mobileSocial.addEventListener('click', () => {
+          closeMenu();
+        });
+      }
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (mobileMenu.classList.contains('active') && 
+            !mobileMenu.contains(e.target as Node) && 
+            !menuBtn.contains(e.target as Node)) {
+          closeMenu();
+        }
+      });
+    }
+  });
+</script>
+
+<style>
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .logo {
+    background: #000;
+    color: #f5f5f0;
+    padding: 0.2rem 0.5rem;
+    font-weight: 950;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    -webkit-text-stroke: 0.5px #f5f5f0;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+    font-stretch: ultra-condensed;
+  }
+
+  .nav-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 2px solid #000;
+    padding: 0.75rem 2rem;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .nav-btn-filled {
+    background: #000;
+    color: #f5f5f0;
+    border: 2px solid #000;
+  }
+
+  .nav-btn-filled:hover {
+    background: #ffd900;
+    color: #000;
+    border-color: #000;
+  }
+
+  .nav-btn:hover {
+    background: #000;
+    color: #f5f5f0;
+  }
+
+  .menu-btn {
+    display: none;
+    flex-direction: row;
+    background: transparent;
+    border: 2px solid #000;
+    padding: 0.4rem 1rem;
+    font-weight: 950;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease, -webkit-text-stroke 0.3s ease;
+    color: #000;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1001;
+    -webkit-text-stroke: 0.3px #000;
+    letter-spacing: 0.5px;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  .menu-btn:hover {
+    background: #000;
+    color: #f5f5f0;
+    -webkit-text-stroke: 0.3px #f5f5f0;
+  }
+
+  .menu-text-wrapper,
+  .menu-icon-wrapper {
+    display: inline-block;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .menu-icon {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1;
+    display: inline-block;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    bottom: 2rem;
+    right: calc(2rem - 10px);
+    width: 50%;
+    max-width: 400px;
+    min-height: 60vh;
+    background: #ffd900;
+    z-index: 1000;
+    padding: 3rem 2rem;
+    opacity: 0;
+    transform-origin: bottom right;
+    overflow: hidden;
+    border: 3px solid #000;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .mobile-menu-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    position: relative;
+  }
+
+  .mobile-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    align-items: flex-start;
+  }
+
+  .mobile-nav-link {
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid #000;
+    width: 100%;
+    line-height: 1.2;
+  }
+
+  .mobile-nav-link:hover {
+    opacity: 0.8;
+  }
+
+  .mobile-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    align-items: flex-start;
+  }
+
+  .contact-item {
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+
+  .mobile-social {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .social-link {
+    font-weight: 900;
+    font-size: 1rem;
+    color: #000;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.3s ease;
+    border-bottom: 2px solid #000;
+    padding-bottom: 0.25rem;
+  }
+
+  .social-link:hover {
+    opacity: 0.8;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .mobile-menu {
+      width: 60%;
+      max-width: 450px;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: row;
+      gap: 0;
+      position: relative;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      padding: 0.4rem 0.8rem;
+    }
+
+    .nav-buttons {
+      display: none;
+    }
+
+    .menu-btn {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .navbar {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 900;
+      padding: 0.35rem 0.7rem;
+    }
+
+    .mobile-menu {
+      width: 85%;
+      max-width: none;
+      bottom: 1rem;
+      right: calc(1rem - 10px);
+      padding: 2rem 1.5rem;
+      min-height: 50vh;
+    }
+
+    .mobile-nav-link {
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .contact-item {
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .social-link {
+      font-size: 0.85rem;
+      font-weight: 900;
+    }
+  }
+</style>
+

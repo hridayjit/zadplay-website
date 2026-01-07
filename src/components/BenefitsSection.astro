@@ -1,0 +1,171 @@
+---
+// No props needed
+---
+
+<section class="benefits-section">
+  <div class="benefits-container">
+    <div class="benefits-header">
+      <h3 class="benefits-subtitle">Why work with us</h3>
+    </div>
+
+    <div class="benefits-list">
+      <div class="benefit-item">
+        <h2 class="benefit-title">TRANSPARENT.</h2>
+        <p class="benefit-description">
+          Clear pricing, real-time reporting, and zero hidden costs. You
+          always know how your space is performing and what you are earning.
+        </p>
+      </div>
+
+      <div class="benefit-item">
+        <h2 class="benefit-title">PERSONALIZED.</h2>
+        <p class="benefit-description">
+          Dedicated team focused on helping you maximize your revenue
+          potential. From onboarding to optimization, we're with you at
+          every step.
+        </p>
+      </div>
+
+      <div class="benefit-item">
+        <h2 class="benefit-title">FUTURE READY.</h2>
+        <p class="benefit-description">
+          Secure, seamless, and scalable systems that connect your space
+          with advertisers effortlessly. Our platform ensures smooth
+          integration and reliable payouts.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Fade-in animation to benefits subtitle
+  gsap.from('.benefits-subtitle', {
+    opacity: 0,
+    duration: 0.6,
+    scrollTrigger: {
+      trigger: '.benefits-section',
+      start: 'top 70%',
+    },
+  });
+
+  // Staggered fade-in + slide-up to benefit titles
+  gsap.from('.benefit-title', {
+    y: 40,
+    opacity: 0,
+    stagger: 0.3,
+    scrollTrigger: {
+      trigger: '.benefits-section',
+      start: 'top 70%',
+    },
+  });
+
+  // Staggered fade-in to benefit descriptions
+  gsap.from('.benefit-description', {
+    opacity: 0,
+    stagger: 0.3,
+    delay: 0.2,
+    scrollTrigger: {
+      trigger: '.benefits-section',
+      start: 'top 70%',
+    },
+  });
+</script>
+
+<style>
+  /* Benefits Section */
+  .benefits-section {
+    background: #fff8d1;
+    padding: 4rem 2rem;
+  }
+
+  .benefits-container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .benefits-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .benefits-subtitle {
+    font-size: clamp(1.9rem, 3vw, 3.5rem);
+    font-weight: 700;
+    color: #000;
+  }
+
+  .benefits-cta {
+    background: #ffd700;
+  }
+
+  .benefits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .benefit-item {
+    max-width: 1000px;
+  }
+
+  .benefit-title {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 900;
+    line-height: 0.7;
+    margin-bottom: 0.2rem;
+    color: #000;
+  }
+
+  .benefit-description {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    line-height: 1.3;
+    color: #000;
+  }
+
+  /* Benefits Section Responsive */
+  @media (max-width: 768px) {
+    .benefits-section {
+      padding: 3rem 1.5rem;
+    }
+
+    .benefits-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .benefits-cta {
+      width: 100%;
+    }
+
+    .benefits-list {
+      gap: 1.5rem;
+    }
+
+    .benefit-title {
+      font-size: 2.5rem;
+    }
+
+    .benefit-description {
+      font-size: 1.15rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .benefits-section {
+      padding: 2rem 1rem;
+    }
+
+    .benefit-title {
+      font-size: 2rem;
+    }
+  }
+</style>

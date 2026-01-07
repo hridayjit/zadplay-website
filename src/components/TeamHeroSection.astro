@@ -1,0 +1,130 @@
+---
+import Navbar from './Navbar.astro';
+---
+
+<section class="team-hero-section">
+  <Navbar />
+  
+  <div class="team-hero-content">
+    <h1 class="team-hero-title">
+      MEET THE MINDS<br />
+      BEHIND<br />
+      THE MISSION
+    </h1>
+    <p class="team-hero-description">
+      We're a team of innovators, strategists, and creators dedicated to transforming<br />
+      unused spaces into revenue-generating assets. Together, we're redefining the future<br />
+      of outdoor advertising and empowering property owners worldwide.
+    </p>
+  </div>
+</section>
+
+<script>
+  import gsap from 'gsap';
+
+  // Ensure animations initialize after DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    // Fade-in + slide-up animation to hero title
+    gsap.from('.team-hero-title', {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.out'
+    });
+
+    // Fade-in animation to hero description with delay
+    gsap.from('.team-hero-description', {
+      opacity: 0,
+      duration: 0.8,
+      delay: 0.3,
+      ease: 'power2.out'
+    });
+  });
+</script>
+
+<style>
+  .team-hero-section {
+    background: #ffd900;
+    min-height: 60vh;
+    padding: 2rem;
+  }
+
+  .team-hero-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .team-hero-title {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    color: #000;
+    text-transform: uppercase;
+  }
+
+  .team-hero-description {
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 300;
+    line-height: 1.6;
+    color: #000;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .team-hero-section {
+      min-height: 50vh;
+    }
+
+    .team-hero-content {
+      padding: 3rem 1.5rem;
+    }
+
+    .team-hero-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .team-hero-section {
+      padding: 1.5rem;
+      min-height: auto;
+    }
+
+    .team-hero-content {
+      padding: 2rem 1rem;
+    }
+
+    .team-hero-title {
+      font-size: clamp(2rem, 8vw, 3rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .team-hero-description {
+      font-size: 1.15rem;
+    }
+
+    .team-hero-description br {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .team-hero-section {
+      padding: 1rem;
+    }
+
+    .team-hero-title {
+      font-size: 2rem;
+    }
+
+    .team-hero-content {
+      padding: 1.5rem 0.5rem;
+    }
+  }
+</style>
